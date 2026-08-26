@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BITZ-CART - Coimbatore</title>
+<style>
+body{margin:0;font-family:sans-serif;background:#0f0f0f;color:white;padding:15px}
+h1{text-align:center;color:#00ff88}
+.header{display:flex;justify-content:space-between;align-items:center;background:#1a1a1a;padding:12px;border-radius:12px;margin-bottom:15px}
+.cart{font-size:22px}
+.products{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card{background:#1e1e1e;border-radius:15px;padding:12px;text-align:center;border:1px solid #333}
+.card img{font-size:40px}
+.card h3{margin:8px 0;font-size:14px}
+.price{color:#00ff88;font-weight:bold;margin:5px 0}
+.btn{background:#00ff88;color:black;border:0;padding:8px 12px;border-radius:20px;font-weight:bold;width:100%;cursor:pointer}
+.cart-box{margin-top:20px;background:#1a1a1a;padding:15px;border-radius:15px}
+.cart-item{display:flex;justify-content:space-between;margin:8px 0}
+.total{font-size:20px;color:#00ff88;text-align:right;margin-top:10px;font-weight:bold}
+.order{background:#00ff88;color:black;border:0;padding:12px;width:100%;border-radius:25px;font-weight:bold;font-size:16px;margin-top:10px}
+</style>
+</head>
+<body>
+<h1>🛒 BITZ-CART</h1>
+<div class="header">
+<span>Gandhipuram Market Da!</span>
+<span class="cart">🛒 <span id="count">0</span></span>
+</div>
+
+<div class="products">
+<div class="card"><div>👕</div><h3>Coimbatore Lungi</h3><div class="price">₹350</div><button class="btn" onclick="add(350,'Lungi')">Add to Cart</button></div>
+<div class="card"><div>🍯</div><h3>Siruvani Halwa</h3><div class="price">₹180</div><button class="btn" onclick="add(180,'Halwa')">Add to Cart</button></div>
+<div class="card"><div>☕</div><h3>Filter Coffee</h3><div class="price">₹120</div><button class="btn" onclick="add(120,'Coffee')">Add to Cart</button></div>
+<div class="card"><div>🥥</div><h3>Kovai Coconut</h3><div class="price">₹60</div><button class="btn" onclick="add(60,'Coconut')">Add to Cart</button></div>
+<div class="card"><div>👟</div><h3>Crosscut Road Shoes</h3><div class="price">₹899</div><button class="btn" onclick="add(899,'Shoes')">Add to Cart</button></div>
+<div class="card"><div>📱</div><h3>BITZ LAZER Gadget</h3><div class="price">₹1499</div><button class="btn" onclick="add(1499,'Gadget')">Add to Cart</button></div>
+</div>
+
+<div class="cart-box">
+<h3>Your Cart Da Kutty:</h3>
+<div id="cartList">Empty da, edhavathu add pannu da!</div>
+<div class="total">Total: ₹<span id="total">0</span></div>
+<button class="btn order" onclick="order()">Order Now - COD Da!</button>
+</div>
+
+<script>
+let total=0,count=0,items=[];
+function add(price,name){
+ total+=price;count++;
+ items.push(name);
+ document.getElementById('total').innerText=total;
+ document.getElementById('count').innerText=count;
+ document.getElementById('cartList').innerHTML=items.join(', ') + ' da!';
+}
+function order(){
+ if(count==0){alert('Dei edhavathu add pannu da!');return;}
+ alert('Semma da kutty! Order placed! Total: ₹'+total+' \nGandhipuram la delivery aayidum da!');
+ items=[];total=0;count=0;
+ document.getElementById('total').innerText=0;
+ document.getElementById('count').innerText=0;
+ document.getElementById('cartList').innerText='Empty da, edhavathu add pannu da!';
+}
+</script>
+</body>
+</html>
