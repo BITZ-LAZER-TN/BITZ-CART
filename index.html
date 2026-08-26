@@ -1,65 +1,123 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BITZ-CART - Coimbatore</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BITZ-CART - Your Gadget Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
-body{margin:0;font-family:sans-serif;background:#0f0f0f;color:white;padding:15px}
-h1{text-align:center;color:#00ff88}
-.header{display:flex;justify-content:space-between;align-items:center;background:#1a1a1a;padding:12px;border-radius:12px;margin-bottom:15px}
-.cart{font-size:22px}
-.products{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.card{background:#1e1e1e;border-radius:15px;padding:12px;text-align:center;border:1px solid #333}
-.card img{font-size:40px}
-.card h3{margin:8px 0;font-size:14px}
-.price{color:#00ff88;font-weight:bold;margin:5px 0}
-.btn{background:#00ff88;color:black;border:0;padding:8px 12px;border-radius:20px;font-weight:bold;width:100%;cursor:pointer}
-.cart-box{margin-top:20px;background:#1a1a1a;padding:15px;border-radius:15px}
-.cart-item{display:flex;justify-content:space-between;margin:8px 0}
-.total{font-size:20px;color:#00ff88;text-align:right;margin-top:10px;font-weight:bold}
-.order{background:#00ff88;color:black;border:0;padding:12px;width:100%;border-radius:25px;font-weight:bold;font-size:16px;margin-top:10px}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+body{background:#f5f5f7;color:#111}
+header{background:#131921;color:white;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo{font-family:'Outfit',sans-serif;font-weight:700;font-size:26px}
+.logo span{color:#febd69}
+.search-bar{flex:1;max-width:600px;margin:0 20px;display:flex}
+.search-bar input{flex:1;padding:11px 15px;border:none;border-radius:4px 0 0 4px;outline:none}
+.search-bar button{background:#febd69;border:none;padding:0 18px;border-radius:0 4px 4px 0;font-weight:600;cursor:pointer}
+.cart-top{display:flex;align-items:center;gap:6px;cursor:pointer}
+.cart-count{background:#f08804;color:#131921;font-weight:700;padding:2px 7px;border-radius:50%;font-size:13px}
+.hero{background:white;padding:18px 20px;border-bottom:1px solid #ddd;display:flex;justify-content:space-between;align-items:center}
+.hero h2{font-family:'Outfit',sans-serif;font-size:18px;font-weight:600}
+.badge{background:#e6f4ea;color:#137333;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:600}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:16px}
+@media(min-width:768px){.grid{grid-template-columns:repeat(3,1fr);max-width:1200px;margin:auto}}
+.card{background:white;border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);transition:0.3s;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-4px);box-shadow:0 8px 20px rgba(0,0,0,0.12)}
+.img-box{height:160px;display:flex;align-items:center;justify-content:center;font-size:70px}
+.info{padding:14px}
+.title{font-weight:600;font-size:15px;min-height:36px}
+.price{color:#B12704;font-weight:700;margin:6px 0;font-size:18px}
+.rating{color:#ffa41c;font-size:13px;margin-bottom:8px}
+.add-btn{width:100%;background:#ffd814;border:1px solid #fcd200;padding:9px;border-radius:8px;font-weight:500;cursor:pointer}
+.add-btn:hover{background:#f7ca00}
+.cart-section{background:white;margin:16px;border-radius:12px;padding:20px;max-width:1200px;margin:auto;box-shadow:0 2px 10px rgba(0,0,0,0.06)}
+.cart-section h3{font-family:'Outfit',sans-serif;font-size:20px;margin-bottom:12px}
+.total{font-weight:700;font-size:19px;text-align:right;margin:10px 0}
+.order-btn{width:100%;background:#131921;color:white;padding:14px;border:none;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer}
+#quotePopup{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(0);background:white;border-radius:16px;padding:28px 22px;width:85%;max-width:340px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.3);z-index:200;transition:0.4s cubic-bezier(0.34,1.56,0.64,1);border:3px solid #febd69}
+#quotePopup.show{transform:translate(-50%,-50%) scale(1)}
+#quotePopup.emoji{font-size:48px;margin-bottom:10px}
+#quotePopup.qtext{font-family:'Outfit',sans-serif;font-weight:700;font-size:18px}
+#quotePopup.qsub{font-size:13px;color:#666;margin-top:6px}
+#overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;z-index:199}
+#overlay.show{display:block}
 </style>
 </head>
 <body>
-<h1>🛒 BITZ-CART</h1>
-<div class="header">
-<span>Gandhipuram Market Da!</span>
-<span class="cart">🛒 <span id="count">0</span></span>
+<header>
+<div class="logo">BITZ<span>-CART</span></div>
+<div class="search-bar"><input id="search" placeholder="Search gadgets..."><button>Search</button></div>
+<div class="cart-top">🛒 <span class="cart-count" id="cartCount">0</span></div>
+</header>
+<div class="hero"><h2>Your Gadget Store - Curated for You</h2><div class="badge">✓ Prime Delivery</div></div>
+<div class="grid" id="productGrid"></div>
+<div class="cart-section">
+<h3>Your Finds</h3>
+<div id="cartList">Your cart is empty. Start exploring!</div>
+<div class="total" id="total">Total: ₹0</div>
+<button class="order-btn" onclick="orderNow()">Order Now</button>
 </div>
-
-<div class="products">
-<div class="card"><div>👕</div><h3>Coimbatore Lungi</h3><div class="price">₹350</div><button class="btn" onclick="add(350,'Lungi')">Add to Cart</button></div>
-<div class="card"><div>🍯</div><h3>Siruvani Halwa</h3><div class="price">₹180</div><button class="btn" onclick="add(180,'Halwa')">Add to Cart</button></div>
-<div class="card"><div>☕</div><h3>Filter Coffee</h3><div class="price">₹120</div><button class="btn" onclick="add(120,'Coffee')">Add to Cart</button></div>
-<div class="card"><div>🥥</div><h3>Kovai Coconut</h3><div class="price">₹60</div><button class="btn" onclick="add(60,'Coconut')">Add to Cart</button></div>
-<div class="card"><div>👟</div><h3>Crosscut Road Shoes</h3><div class="price">₹899</div><button class="btn" onclick="add(899,'Shoes')">Add to Cart</button></div>
-<div class="card"><div>📱</div><h3>BITZ LAZER Gadget</h3><div class="price">₹1499</div><button class="btn" onclick="add(1499,'Gadget')">Add to Cart</button></div>
+<div id="overlay" onclick="closePopup()"></div>
+<div id="quotePopup">
+<div class="emoji" id="popupEmoji">🎧</div>
+<div class="qtext" id="popupText">Enjoy your music!</div>
+<div class="qsub" id="popupSub">Great choice</div>
 </div>
-
-<div class="cart-box">
-<h3>Your Cart Da Kutty:</h3>
-<div id="cartList">Empty da, edhavathu add pannu da!</div>
-<div class="total">Total: ₹<span id="total">0</span></div>
-<button class="btn order" onclick="order()">Order Now - COD Da!</button>
-</div>
-
 <script>
-let total=0,count=0,items=[];
-function add(price,name){
- total+=price;count++;
- items.push(name);
- document.getElementById('total').innerText=total;
- document.getElementById('count').innerText=count;
- document.getElementById('cartList').innerHTML=items.join(', ') + ' da!';
+const products=[
+{id:1,name:"Wireless Headset Pro",price:1999,emoji:"🎧",quote:"Enjoy your music with our gadget - Feel every beat!",sub:"Immersive sound awaits you",gradient:"linear-gradient(135deg,#667eea,#764ba2)",rating:"★★★★☆ 4.5"},
+{id:2,name:"Smart Watch Series X",price:3499,emoji:"⌚",quote:"Time to upgrade your lifestyle!",sub:"Track. Achieve. Conquer.",gradient:"linear-gradient(135deg,#f093fb,#f5576c)",rating:"★★★★★ 4.8"},
+{id:3,name:"Power Bank 20000mAh",price:1299,emoji:"🔋",quote:"Power that never lets you down!",sub:"Stay charged, stay connected",gradient:"linear-gradient(135deg,#4facfe,#00f2fe)",rating:"★★★★☆ 4.4"},
+{id:4,name:"Bluetooth Speaker Boom",price:2499,emoji:"🔊",quote:"Let the party begin anywhere!",sub:"Your vibe, your sound",gradient:"linear-gradient(135deg,#43e97b,#38f9d7)",rating:"★★★★☆ 4.6"},
+{id:5,name:"Gaming Mouse RGB",price:899,emoji:"🖱️",quote:"Precision meets performance!",sub:"Win every game in style",gradient:"linear-gradient(135deg,#fa709a,#fee140)",rating:"★★★★★ 4.9"},
+{id:6,name:"Mechanical Keyboard",price:2999,emoji:"⌨️",quote:"Type like a pro, work like a boss!",sub:"Built for creators",gradient:"linear-gradient(135deg,#a8edea,#fed6e3)",rating:"★★★★☆ 4.7"},
+{id:7,name:"4K Action Camera",price:5499,emoji:"📷",quote:"Capture your adventures in 4K!",sub:"Your story deserves clarity",gradient:"linear-gradient(135deg,#ff9a9e,#fecfef)",rating:"★★★★☆ 4.5"},
+{id:8,name:"Wireless Earbuds",price:1799,emoji:"🎵",quote:"Freedom sounds this good!",sub:"No wires, pure magic",gradient:"linear-gradient(135deg,#ffecd2,#fcb69f)",rating:"★★★★★ 4.8"}
+];
+let cart=[],total=0;
+const grid=document.getElementById('productGrid');
+products.forEach(p=>{
+  const div=document.createElement('div');
+  div.className='card';
+  div.innerHTML=`<div class="img-box" style="background:${p.gradient}">${p.emoji}</div><div class="info"><div class="title">${p.name}</div><div class="rating">${p.rating}</div><div class="price">₹${p.price}</div><button class="add-btn" onclick="addToCart(${p.id})">Add to Cart</button></div>`;
+  grid.appendChild(div);
+});
+function addToCart(id){
+  const p=products.find(x=>x.id===id);
+  cart.push(p); total+=p.price;
+  updateCart(); showQuote(p);
 }
-function order(){
- if(count==0){alert('Dei edhavathu add pannu da!');return;}
- alert('Semma da kutty! Order placed! Total: ₹'+total+' \nGandhipuram la delivery aayidum da!');
- items=[];total=0;count=0;
- document.getElementById('total').innerText=0;
- document.getElementById('count').innerText=0;
- document.getElementById('cartList').innerText='Empty da, edhavathu add pannu da!';
+function updateCart(){
+  document.getElementById('cartCount').innerText=cart.length;
+  if(cart.length===0){document.getElementById('cartList').innerText='Your cart is empty. Start exploring!';}
+  else{
+    const names=cart.map(c=>c.name).join(', ');
+    document.getElementById('cartList').innerHTML=`<strong>${cart.length} items:</strong> ${names}`;
+  }
+  document.getElementById('total').innerText=`Total: ₹${total}`;
 }
+function showQuote(p){
+  document.getElementById('popupEmoji').innerText=p.emoji;
+  document.getElementById('popupText').innerText=p.quote;
+  document.getElementById('popupSub').innerText=p.sub;
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('quotePopup').classList.add('show');
+  setTimeout(closePopup,2200);
+}
+function closePopup(){
+  document.getElementById('quotePopup').classList.remove('show');
+  document.getElementById('overlay').classList.remove('show');
+}
+function orderNow(){
+  if(cart.length===0){alert('Your cart is empty!');return;}
+  alert(`Order Placed! Total ₹${total}\nThank you for shopping with BITZ-CART!`);
+  cart=[];total=0;updateCart();
+}
+document.getElementById('search').addEventListener('input',e=>{
+  const q=e.target.value.toLowerCase();
+  const cards=document.querySelectorAll('.card');
+  products.forEach((p,i)=>{cards[i].style.display=p.name.toLowerCase().includes(q)?'flex':'none';});
+});
 </script>
 </body>
 </html>
